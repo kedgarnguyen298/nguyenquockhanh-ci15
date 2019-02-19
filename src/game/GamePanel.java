@@ -5,32 +5,35 @@ import tklibs.SpriteUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
-    BufferedImage backgroundimage;
-    BufferedImage playerimage;
-    int backgroundx;
-    int backgroundy;
-    int playerx;
-    int playery;
+    BufferedImage bulletImage;
+//    Vector2D[] bulletPositions;
+    ArrayList<Vector2D> bulletPositions;
+    Background background;
+    Player player;
 
     public GamePanel() {
-        backgroundimage = SpriteUtils.loadImage("assets/images/background/0.png");
-        playerimage = SpriteUtils.loadImage("assets/images/players/straight/0.png");
-        backgroundx = 0;
-        backgroundy = 600 - 3109;
-        playerx = 200;
-        playery = 500;
+        background = new Background();
+        player = new Player();
+        bulletImage = SpriteUtils.loadImage("assets/images/player-bullets/a/1.png");
+        bulletPositions = new ArrayList<>();
+        // bulletPosition.add() //them phan tu vao mang
+        // bulletPosition.get() //lay ra phan tu o vi tri cu the
+        // bulletPosition.size() //lay ra kich thuoc cua mang
     }
 
     @Override
     public void paint(Graphics g) {
 
         // ve anh
-        g.drawImage(backgroundimage, backgroundx, backgroundy, null);
-        g.drawImage(playerimage, playerx , playery , null);
-
+        background.render(g);
+        player.render(g);
+        for(int i = 0; i < bulletPositions.size(); i++) {
+            Vector2D bulletPosition = bulletPositions.get(i);
+            g.drawImage(bulletImage, (int)bulletPosition.x, (int)bulletPosition.y, null);
+        }
     }
 
     public void gameLoop() {
@@ -53,21 +56,16 @@ public class GamePanel extends JPanel {
 
 
     private void runAll() {
-        if (backgroundy < 0) {
-            backgroundy += 10;
-        }
+        background.run();
+        player.run();
+        bulletsRun();
+    }
 
-        if (GameWindow.isUpPress && playery > 0) {
-            playery--;
-        }
-        if (GameWindow.isDownPress && playery < 500) {
-            playery++;
-        }
-        if (GameWindow.isLeftPress && playerx > 0) {
-            playerx--;
-        }
-        if (GameWindow.isRightPress && playerx < 350) {
-            playerx++;
+    private void bulletsRun() {
+        for(int i = 0; i < bulletPositions.size(); i++) {
+            Vector2D bulletPosition = bulletPositions.get(i);
+            bulletPosition.y -= 3;
         }
     }
+
 }

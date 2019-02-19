@@ -1,10 +1,13 @@
 import game.GamePanel;
 import game.GameWindow;
+import game.Vector2D;
 import tklibs.SpriteUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by huynq on 7/4/17.
@@ -34,11 +37,14 @@ public class Program {
     public static void main(String[] args) {
         GameWindow window = new GameWindow();
         window.setTitle("Game Touhou");
-        window.setSize(800, 600);
+//        window.setSize(800, 600);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         GamePanel panel = new GamePanel();
+        panel.setPreferredSize(new Dimension(800, 600));
+        window.add(panel);
+        window.pack();
         panel.setBackground(Color.CYAN);
         window.add(panel);
 
@@ -61,5 +67,23 @@ public class Program {
 //
 //    private static int divide(int x, int y) {
 //        return x / y;
+//        ArrayList<Vector2D> vectors = new ArrayList<>();
+//        Vector2D v1 = new Vector2D(1, 1);
+//        Vector2D v2 = new Vector2D(2, 2);
+//        Vector2D v3 = new Vector2D(3, 3);
+//        Vector2D v4 = new Vector2D(4, 4);
+
+//        double max = 0;
+//        int maxIndex = 0;
+//
+//        for(int i = 0; i < vectors.size(); i++) {
+//            Vector2D vector = vectors.get(i);
+//            if(vector.x + vector.y > max) {
+//                max = vector.x + vector.y;
+//                maxIndex = i;
+//            }
+//
+//        }
+//
     }
 }
